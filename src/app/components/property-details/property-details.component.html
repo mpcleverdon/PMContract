@@ -1,0 +1,27 @@
+<ion-content class="ion-padding">
+  <h1>Property Details</h1>
+  
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Select Property</ion-label>
+      <ion-select formControlName="selectedProperty" (ionChange)="onPropertyChange()">
+        <ion-select-option *ngFor="let property of properties" [value]="property.PropertyID">
+          {{property.PropertyHeadline}} - {{property.NombreVia}} {{property.NumeroVivienda}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ng-container *ngIf="propertyForm.get('selectedProperty')?.value">
+      <h2>Property Owners</h2>
+      <ion-list formArrayName="owners">
+        <ion-item *ngFor="let ownerForm of ownersFormArray.controls; let i = index" [formGroupName]="i">
+          <ion-label>{{owners[i].firstname}} {{owners[i].sirname}} ({{owners[i].OwnerCode}})</ion-label>
+          <ion-input type="number" formControlName="rentalParticipation" placeholder="Rental %"></ion-input>
+          <ion-input type="number" formControlName="expenseParticipation" placeholder="Expense %"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+    <ion-button expand="block" type="submit" [disabled]="!propertyForm.valid">Next</ion-button>
+  </form>
+</ion-content>

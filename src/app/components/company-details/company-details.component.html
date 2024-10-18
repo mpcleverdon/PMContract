@@ -1,0 +1,30 @@
+<ion-content class="ion-padding">
+  <h1>Company Details</h1>
+  
+  <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Company Name</ion-label>
+      <ion-input formControlName="name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Company Address</ion-label>
+      <ion-input formControlName="address" required></ion-input>
+    </ion-item>
+
+    <h2>Legal Representatives</h2>
+    <ion-list formArrayName="representatives">
+      <ion-item *ngFor="let rep of representatives.controls; let i = index" [formGroupName]="i">
+        <ion-input formControlName="name" placeholder="Representative Name"></ion-input>
+        <ion-input formControlName="position" placeholder="Position"></ion-input>
+        <ion-button fill="clear" (click)="removeRepresentative(i)" *ngIf="representatives.length > 1">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" (click)="addRepresentative()">Add Representative</ion-button>
+
+    <ion-button expand="block" type="submit" [disabled]="!companyForm.valid">Next</ion-button>
+  </form>
+</ion-content>

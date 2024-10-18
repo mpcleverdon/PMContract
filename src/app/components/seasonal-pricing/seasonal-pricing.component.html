@@ -1,0 +1,56 @@
+<ion-content class="ion-padding">
+  <h1>Seasonal Pricing</h1>
+  
+  <form [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label>Currency</ion-label>
+      <ion-select formControlName="currency">
+        <ion-select-option value="GBP">Pounds Sterling (£)</ion-select-option>
+        <ion-select-option value="EUR">Euros (€)</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Select Predefined Season Chart</ion-label>
+      <ion-select [(ngModel)]="selectedChart" [ngModelOptions]="{standalone: true}" (ionChange)="handleChartSelection($event.detail.value)">
+        <ion-select-option *ngFor="let chartName of predefinedSeasons | uniqueChartNames" [value]="chartName">
+          {{chartName}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-list formArrayName="seasons">
+      <ion-item-group *ngFor="let season of seasons.controls; let i = index" [formGroupName]="i">
+        <ion-item-divider>
+          <ion-label>
+            <ion-input formControlName="name" placeholder="Season Name"></ion-input>
+          </ion-label>
+          <ion-button fill="clear" slot="end" (click)="removeSeason(i)" *ngIf="seasons.length > 1">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-item-divider>
+        <ion-item>
+          <ion-label position="stacked">Start Date</ion-label>
+          <ion-datetime formControlName="startDate" displayFormat="DD MMM YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">End Date</ion-label>
+          <ion-datetime formControlName="endDate" displayFormat="DD MMM YYYY"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Nightly Rate ({{pricingForm.get('currency')?.value === 'GBP' ? '£' : '€'}})</ion-label>
+          <ion-input type="number" formControlName="nightlyRate" (ionChange)="updateWeeklyRate(i)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Weekly Rate ({{pricingForm.get('currency')?.value === 'GBP' ? '£' : '€'}})</ion-label>
+          <ion-input type="number" formControlName="weeklyRate" readonly></ion-input>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+
+    <ion-button expand="block" (click)="addCustomSeason()">Add Custom Season</ion-button>
+
+    <ion-button expand="block" (click)="onPrevious()">Previous</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="!pricingForm.valid">Next</ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,65 @@
+<ion-content class="ion-padding">
+  <h1>Contract Summary</h1>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Company Details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-bilingual-display [originalText]="'Name: ' + contractData.company.name + '\nAddress: ' + contractData.company.address"></app-bilingual-display>
+      <h3>Legal Representatives</h3>
+      <ion-list>
+        <ion-item *ngFor="let rep of contractData.company.representatives">
+          <app-bilingual-display [originalText]="rep.name + ' - ' + rep.position"></app-bilingual-display>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Property Details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-bilingual-display [originalText]="'Property ID: ' + contractData.property.PropertyID + '\nAddress: ' + contractData.property.address"></app-bilingual-display>
+      <h3>Property Owners</h3>
+      <ion-list>
+        <ion-item *ngFor="let owner of contractData.property.owners">
+          <app-bilingual-display [originalText]="'Owner Code: ' + owner.OwnerCode + '\nRental Participation: ' + owner.rentalParticipation + '%\nExpense Participation: ' + owner.expenseParticipation + '%'"></app-bilingual-display>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selected Services</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let service of contractData.services">
+          <app-bilingual-display [originalText]="service"></app-bilingual-display>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Seasonal Pricing</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Currency: {{contractData.pricing.currency === 'GBP' ? 'Pounds Sterling (£)' : 'Euros (€)'}}</p>
+      <ion-list>
+        <ion-item *ngFor="let season of contractData.pricing.seasons">
+          <ion-label>
+            <h2>{{season.name}}</h2>
+            <app-bilingual-display [originalText]="'Start Date: ' + season.startDate + '\nEnd Date: ' + season.endDate + '\nNightly Rate: ' + (contractData.pricing.currency === 'GBP' ? '£' : '€') + season.nightlyRate + '\nWeekly Rate: ' + (contractData.pricing.currency === 'GBP' ? '£' : '€') + season.weeklyRate"></app-bilingual-display>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="onEdit()">Edit Contract</ion-button>
+</ion-content>

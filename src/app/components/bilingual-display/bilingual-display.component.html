@@ -1,0 +1,17 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="6">
+      <h4>Original Text</h4>
+      <p>{{originalText}}</p>
+    </ion-col>
+    <ion-col size="6">
+      <h4>Translated Text</h4>
+      <ng-container *ngIf="translatedText; else translateButton">
+        <p>{{translatedText}}</p>
+      </ng-container>
+      <ng-template #translateButton>
+        <ion-button (click)="translateText()">Translate</ion-button>
+      </ng-template>
+    </ion-col>
+  </ion-row>
+</ion-grid>
