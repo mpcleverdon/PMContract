@@ -1,0 +1,12 @@
+/* Add application styles & imports to this file! */
+@import "@ionic/angular/css/ionic.bundle.css";
+
+[dir=rtl] .ion-float-start {
+  /* styles */
+}
+
+[dir=rtl] .ion-float-end {
+  /* styles */
+}
+
+/* Add similar rules for other classes */

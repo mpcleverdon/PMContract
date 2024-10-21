@@ -57,6 +57,7 @@ export class PropertyDetailsComponent implements OnInit {
   }
 
   async loadOwnerProperties(propertyId: string) {
+    console.log('Loading owner properties for property ID:', propertyId);
     // Replace with actual API call
     const ownerProperties = [
       { owcode: 'OWN001', PropertyID: '1', rentals: 60, expenses: 60 },
